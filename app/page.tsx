@@ -6,16 +6,26 @@ import { FormEvent } from 'react';
 export default function Home() {
   const router = useRouter();
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     
     const formData = new FormData(event.currentTarget);
     const name = formData.get('name');
     const amount = formData.get('amount');
 
-    console.log({ name, amount });
+    const response = await fetch('/api/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name, amount }),
+    });
 
-    router.push('/chart');
+    if (response.ok) {
+      router.push('/chart');
+    } else {
+      console.error('Failed to submit data');
+    }
   };
 
   return (
