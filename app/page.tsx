@@ -12,13 +12,19 @@ export default function Home() {
     const formData = new FormData(event.currentTarget);
     const name = formData.get('name');
     const amount = formData.get('amount');
+    const userKey = formData.get('userKey'); // Get the user-provided key
+
+    if (!name || !amount || !userKey) {
+      console.error('Name, amount, and userKey are required');
+      return;
+    }
 
     const response = await fetch('/api/submit', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name, amount }),
+      body: JSON.stringify({ name, amount, userKey }),
     });
 
     if (response.ok) {
@@ -43,6 +49,14 @@ export default function Home() {
           type="number"
           name="amount"
           placeholder="Enter Amount"
+          className="mb-2 p-2 border border-gray-300 rounded"
+          required
+        />
+
+        <input
+          type="text"
+          name="userKey"
+          placeholder="Enter Your Key"
           className="mb-4 p-2 border border-gray-300 rounded"
           required
         />
