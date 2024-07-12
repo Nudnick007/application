@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
-import { decrypt } from '../../../utils/encryption'; // Adjust the import path accordingly
-
+import { decrypt } from '../../../utils/encryption'; 
 const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
